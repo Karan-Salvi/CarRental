@@ -9,19 +9,7 @@ import { getAllCars } from "@/ai/flows/get-cars-flow";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
-
-async function CarList() {
-  const cars = await getAllCars();
-  const listedCars = cars.slice(0, 6);
-
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {listedCars.map((car) => (
-        <CarCard key={car.id} car={car} />
-      ))}
-    </div>
-  );
-}
+import Carlist from "@/components/Carlist";
 
 function CarListSkeleton() {
   return (
@@ -66,6 +54,7 @@ const testimonials = [
 export default function Home() {
   // const { user } = useSelector((state) => state.auth);
   // console.log(user);
+
   return (
     <div className="flex flex-col bg-background ">
       <section className="w-full pt-20 md:pt-28 lg:pt-30 bg-gradient-to-br from-white to-slate-200">
@@ -73,7 +62,10 @@ export default function Home() {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 tracking-tight text-primary">
             Luxury cars on Rent
           </h1>
-          <div className="max-w-4xl mx-auto bg-card p-4 rounded-full shadow-lg grid md:grid-cols-4 gap-4 items-center mt-12 mb-8">
+          <Link
+            href="/cars"
+            className="max-w-4xl mx-auto bg-card p-4 rounded-full shadow-lg grid md:grid-cols-4 gap-4 items-center mt-12 mb-8"
+          >
             <div className="relative md:col-span-2">
               <Input
                 placeholder="Pick-up location"
@@ -90,7 +82,7 @@ export default function Home() {
               placeholder="Return date"
               className="h-12 bg-background border-none rounded-full text-muted-foreground"
             />
-          </div>
+          </Link>
           <div className="w-full flex justify-center">
             <Image
               src="/images/car1.png"
@@ -115,7 +107,7 @@ export default function Home() {
           </p>
         </div>
         <Suspense fallback={<CarListSkeleton />}>
-          <CarList />
+          <Carlist />
         </Suspense>
       </section>
 

@@ -8,6 +8,9 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Logo from "./logo";
 import { Input } from "./ui/input";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, rehydrateAuth } from "@/store/slices/authSlice";
+import { useEffect } from "react";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -17,6 +20,13 @@ const navLinks = [
 
 export default function Header() {
   const pathname = usePathname();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  console.log("User is ", user);
+
+  useEffect(() => {
+    dispatch(rehydrateAuth());
+  }, [dispatch]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm">
@@ -48,32 +58,43 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/admin/dashboard"
-            className={cn(
-              "text-base font-medium transition-colors hover:text-primary",
-              pathname.startsWith("/admin")
-                ? "text-primary"
-                : "text-muted-foreground"
-            )}
-          >
-            Admin
-          </Link>
+          {user && user.role == "owner" && (
+            <Link
+              href="/admin/dashboard"
+              className={cn(
+                "text-base font-medium transition-colors hover:text-primary",
+                pathname.startsWith("/admin")
+                  ? "text-primary"
+                  : "text-muted-foreground"
+              )}
+            >
+              Admin
+            </Link>
+          )}
         </nav>
         <div className="hidden md:flex items-center gap-4">
-          <div className="relative">
+          <Link href="/cars" className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search cars"
               className="pl-9 bg-slate-100 border-none rounded-full h-10 w-48"
             />
-          </div>
-          <Button variant="outline" asChild>
-            <Link href="#">List cars</Link>
-          </Button>
-          <Button asChild>
+          </Link>
+          {user && user.role == "owner" && (
+            <Button variant="outline" asChild>
+              <Link href="/admin/cars/new">List cars</Link>
+            </Button>
+          )}
+          {user ? (
+            <Button onClick={() => dispatch(logout())}>Logout</Button>
+          ) : (
+            <Button asChild>
+              <Link href="/login">Login</Link>
+            </Button>
+          )}
+          {/* <Button asChild>
             <Link href="/login">Logout</Link>
-          </Button>
+          </Button> */}
         </div>
         <Sheet>
           <SheetTrigger asChild>
@@ -118,6 +139,7 @@ export default function Header() {
                 <Button variant="outline" asChild>
                   <Link href="#">List Your Car</Link>
                 </Button>
+
                 <Button variant="primary" asChild>
                   <Link href="/login">Logout</Link>
                 </Button>

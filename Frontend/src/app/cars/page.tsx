@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useFetchCarsQuery } from "@/store/api/api";
 
 function CarListSkeleton() {
   return (
@@ -44,44 +45,37 @@ function CarListSkeleton() {
 
 export default function CarsPage() {
   const [allCars, setAllCars] = useState<Car[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [carType, setCarType] = useState("all");
 
-  useEffect(() => {
-    async function fetchCars() {
-      try {
-        const fetchedCars = await getAllCars();
-        setAllCars(fetchedCars);
-      } catch (error) {
-        console.error("Failed to fetch cars:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchCars();
-  }, []);
+  const { data: cars, error, isLoading } = useFetchCarsQuery({});
+  console.log("Fetched cars:", cars, error, isLoading);
 
   const filteredCars = useMemo(() => {
-    return allCars.filter((car) => {
+    return cars?.filter((car: any) => {
       const matchesSearch =
         searchTerm.toLowerCase() === "" ||
-        car.make.toLowerCase().includes(searchTerm.toLowerCase()) ||
         car.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        car.features.some((f) =>
-          f.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+        car.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        car.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        car.fuelType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        car.transmission.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        car.location.toLowerCase().includes(searchTerm.toLowerCase());
 
-      const matchesType = carType === "all" || car.type === carType;
+      const matchesType = carType === "all" || car.category === carType;
 
       return matchesSearch && matchesType;
     });
-  }, [allCars, searchTerm, carType]);
+  }, [cars, searchTerm, carType]);
+
+  console.log("Filtered cars:", filteredCars);
 
   const carTypes = useMemo(() => {
-    const types = new Set(allCars.map((car) => car.type));
+    const types = new Set(cars?.map((car) => car?.category));
+
     return ["all", ...Array.from(types)];
-  }, [allCars]);
+  }, [cars]);
 
   return (
     <div className="bg-slate-50/50 max-w-7xl mx-auto">
@@ -111,8 +105,8 @@ export default function CarsPage() {
               <SelectValue placeholder="Car Type" />
             </SelectTrigger>
             <SelectContent>
-              {carTypes.map((type) => (
-                <SelectItem key={type} value={type} className="capitalize">
+              {carTypes.map((type, index) => (
+                <SelectItem key={index} value={type} className="capitalize">
                   {type === "all" ? "All Types" : type}
                 </SelectItem>
               ))}
@@ -122,7 +116,7 @@ export default function CarsPage() {
 
         <div className="mb-8">
           <p className="text-muted-foreground">
-            Showing {filteredCars.length} Cars
+            Showing {filteredCars?.length} Cars
           </p>
         </div>
 
@@ -130,8 +124,8 @@ export default function CarsPage() {
           <CarListSkeleton />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mx-auto">
-            {filteredCars.map((car) => (
-              <CarCard key={car.id} car={car} />
+            {filteredCars?.map((car: any, index: number) => (
+              <CarCard key={index} car={car} />
             ))}
           </div>
         )}

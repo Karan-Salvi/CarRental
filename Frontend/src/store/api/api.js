@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const BASE_URL = "http://localhost:8000/api";
 
 // Get token from localStorage for auth
 const baseQuery = fetchBaseQuery({
@@ -39,8 +39,20 @@ export const api = createApi({
     }),
 
     // -------- Cars --------
+    // fetchCars: builder.query({
+    //   query: () => "/cars",
+    //   providesTags: ["Cars"],
+    // }),
     fetchCars: builder.query({
-      query: () => "/cars",
+      query: ({ location, category, available } = {}) => {
+        // Build query string
+        const params = new URLSearchParams();
+        if (location) params.append("location", location);
+        if (category) params.append("category", category);
+        if (available !== undefined) params.append("available", available);
+        const queryString = params.toString();
+        return `/cars${queryString ? `?${queryString}` : ""}`;
+      },
       providesTags: ["Cars"],
     }),
     fetchCar: builder.query({

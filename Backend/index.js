@@ -203,6 +203,11 @@ app.post("/api/register", async (req, res) => {
 app.post("/api/login", async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log("Login attempt:", email);
+    console.log("Password:", password);
+    if (!email || !password)
+      return res.status(400).json({ message: "Missing email or password" });
+
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
     const match = await bcrypt.compare(password, user.password);
@@ -321,20 +326,20 @@ app.delete("/cars/:id", async (req, res) => {
   }
 });
 
-// /** List cars (public) */
-// app.get("/api/cars", async (req, res) => {
-//   try {
-//     const { location, category, available } = req.query;
-//     const q = {};
-//     if (location) q.location = location;
-//     if (category) q.category = category;
-//     if (available !== undefined) q.isAvailable = available === "true";
-//     const cars = await Car.find(q).populate("owner", "name email");
-//     res.json(cars);
-//   } catch (err) {
-//     res.status(500).json({ message: "List cars failed", error: err.message });
-//   }
-// });
+/** List cars (public) */
+app.get("/api/cars", async (req, res) => {
+  try {
+    const { location, category, available } = req.query;
+    const q = {};
+    if (location) q.location = location;
+    if (category) q.category = category;
+    if (available !== undefined) q.isAvailable = available === "true";
+    const cars = await Car.find(q).populate("owner", "name email");
+    res.json(cars);
+  } catch (err) {
+    res.status(500).json({ message: "List cars failed", error: err.message });
+  }
+});
 
 /** Get single car */
 app.get("/api/cars/:id", async (req, res) => {
