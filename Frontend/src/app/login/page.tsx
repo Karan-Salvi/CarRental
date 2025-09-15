@@ -34,7 +34,7 @@ export default function LoginPage() {
 
     try {
       const res = await Login(form).unwrap();
-      console.log(res);
+     
       localStorage.setItem("token", res.token);
       dispatch(setCredentials({ user: res.user, token: res.token }));
       router.push("/");

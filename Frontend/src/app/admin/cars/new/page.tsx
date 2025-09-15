@@ -63,7 +63,7 @@ export default function NewCarPage() {
 
     try {
       const result = await createCar(carData).unwrap(); // unwrap for direct response or throw error
-      console.log("Car created:", result);
+      
     } catch (err) {
       console.error("Failed to create car:", err);
     }

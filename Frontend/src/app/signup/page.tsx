@@ -39,7 +39,7 @@ export default function SignupPage() {
 
     try {
       const res = await register(form).unwrap();
-      console.log(res);
+    
       router.push("/login");
     } catch (err) {
       console.error(err);

@@ -31,8 +31,7 @@ export default function UserBookingsPage() {
     isFetching,
   } = useFetchBookingsQuery();
 
-  console.log("Bookings data:", bookings, error, isLoading, isFetching);
-
+  
   useEffect(() => {
     setIsClient(true);
   }, []);

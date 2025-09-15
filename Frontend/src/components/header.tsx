@@ -22,7 +22,6 @@ export default function Header() {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  console.log("User is ", user);
 
   useEffect(() => {
     dispatch(rehydrateAuth());

@@ -23,7 +23,7 @@ export default function AdminCarsPage() {
   //   const [cars, setCars] = useState<Car[]>(initialCars);
 
   const { data: cars, error, isLoading } = useFetchCarsQuery({});
-  console.log("Fetched cars:", cars, error, isLoading);
+ 
 
   const [deleteCar, { isLoading: isDeleting, isError, isSuccess }] =
     useDeleteCarMutation();
@@ -31,7 +31,7 @@ export default function AdminCarsPage() {
   const handleDelete = async (id: string) => {
     try {
       await deleteCar(id).unwrap(); // unwrap gives you direct result or throws error
-      console.log("Car deleted successfully");
+      
     } catch (err) {
       console.error("Failed to delete car:", err);
     }

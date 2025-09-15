@@ -50,7 +50,7 @@ export default function CarsPage() {
   const [carType, setCarType] = useState("all");
 
   const { data: cars, error, isLoading } = useFetchCarsQuery({});
-  console.log("Fetched cars:", cars, error, isLoading);
+ 
 
   const filteredCars = useMemo(() => {
     return cars?.filter((car: any) => {
@@ -69,7 +69,7 @@ export default function CarsPage() {
     });
   }, [cars, searchTerm, carType]);
 
-  console.log("Filtered cars:", filteredCars);
+  
 
   const carTypes = useMemo(() => {
     const types = new Set(cars?.map((car) => car?.category));

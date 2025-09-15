@@ -37,14 +37,14 @@ export default function AdminDashboardPage() {
     isFetching,
   } = useFetchBookingsQuery();
 
-  console.log("Bookings data:", bookings, error, isLoading, isFetching);
+  
 
   const {
     data: cars,
     error: carError,
     isLoading: carLoading,
   } = useFetchCarsQuery({});
-  console.log("Fetched cars:", cars, error, isLoading);
+  
 
   useEffect(() => {
     setIsClient(true);

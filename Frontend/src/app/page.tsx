@@ -52,8 +52,7 @@ const testimonials = [
 ];
 
 export default function Home() {
-  // const { user } = useSelector((state) => state.auth);
-  // console.log(user);
+ 
 
   return (
     <div className="flex flex-col bg-background ">

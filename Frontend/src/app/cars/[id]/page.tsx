@@ -24,11 +24,9 @@ import { useCreateBookingMutation, useFetchCarQuery } from "@/store/api/api";
 
 export default function CarDetailsPage() {
   const params = useParams();
-  // const [car, setCar] = useState<Car | null>(null);
 
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
-  // const [loading, setLoading] = useState(true);
 
   const { data: car, error, isLoading, isError } = useFetchCarQuery(params.id);
   const [
@@ -40,40 +38,6 @@ export default function CarDetailsPage() {
       error: bookingError,
     },
   ] = useCreateBookingMutation();
-
-  console.log(
-    "API Data:",
-    car,
-    "Error:",
-    error,
-    "Loading:",
-    isLoading,
-    "IsError:",
-    isError
-  );
-
-  // useEffect(() => {
-  //   async function fetchCar() {
-  //     if (!params.id || typeof params.id !== "string") return;
-  //     try {
-  //       const fetchedCar = await getCarById(params.id);
-  //       setCar(fetchedCar);
-  //     } catch (error) {
-  //       console.error("Failed to fetch car:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  //   fetchCar();
-  // }, [params.id]);
-
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (!car) {
-  //   notFound();
-  // }
 
   const featureIcons = {
     Seats: <Users className="w-6 h-6 text-primary" />,
@@ -108,12 +72,11 @@ export default function CarDetailsPage() {
       startDate: pickupDate,
       endDate: returnDate,
     };
-    console.log("Booking Data:", bookingData);
+    
 
     try {
-      const result = await createBooking(bookingData).unwrap(); // unwrap
-      console.log("Booking successful:", result);
-      // Optionally, redirect or show a success message
+      const result = await createBooking(bookingData).unwrap(); 
+      
     } catch (err) {
       console.error("Failed to create booking:", err);
     }

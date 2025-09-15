@@ -5,7 +5,7 @@ import CarCard from "./car-card";
 
 const Carlist = () => {
   const { data: cars, error, isLoading } = useFetchCarsQuery({});
-  console.log("Fetched cars:", cars, error, isLoading);
+  
   const listedCars = cars?.slice(0, 6);
 
   return (

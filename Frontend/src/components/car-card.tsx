@@ -23,7 +23,7 @@ function formatDateWithDay(timestamp: string) {
 }
 
 export default function CarCard({ car }: any) {
-  console.log("Rendering CarCard for car:", car);
+  
   return (
     <Card className="rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group border bg-card">
       <Link href={`/cars/${car._id}`} className="block">
