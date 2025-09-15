@@ -582,7 +582,7 @@ async function start() {
   try {
     await mongoose.connect(MONGO_URI);
     console.log("Mongo connected");
-    app.listen(PORT, () =>
+    app.listen(PORT || 10000, () =>
       console.log(`Server running on http://localhost:${PORT}`)
     );
   } catch (err) {

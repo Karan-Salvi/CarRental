@@ -115,7 +115,11 @@ export default function Header() {
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
-                    href={link.href}
+                    href={
+                      link.href == "/dashboard/bookings" && !user
+                        ? "/login"
+                        : link.href
+                    }
                     className={cn(
                       "text-base font-medium transition-colors hover:text-primary",
                       pathname === link.href
@@ -126,26 +130,28 @@ export default function Header() {
                     {link.label}
                   </Link>
                 ))}
-                <Link
-                  href="/admin/dashboard"
-                  className={cn(
-                    "text-base font-medium transition-colors hover:text-primary",
-                    pathname.startsWith("/admin")
-                      ? "text-primary"
-                      : "text-muted-foreground"
-                  )}
-                >
-                  Admin
-                </Link>
+                {user && user.role == "owner" && (
+                  <Link
+                    href="/admin/dashboard"
+                    className={cn(
+                      "text-base font-medium transition-colors hover:text-primary",
+                      pathname.startsWith("/admin")
+                        ? "text-primary"
+                        : "text-muted-foreground"
+                    )}
+                  >
+                    Admin
+                  </Link>
+                )}
               </nav>
               <div className="mt-auto p-4 border-t flex flex-col gap-2">
-                <Button variant="outline" asChild>
-                  <Link href="#">List Your Car</Link>
-                </Button>
-
-                <Button variant="primary" asChild>
-                  <Link href="/login">Logout</Link>
-                </Button>
+                {user ? (
+                  <Button onClick={() => dispatch(logout())}>Logout</Button>
+                ) : (
+                  <Button asChild>
+                    <Link href="/login">Login</Link>
+                  </Button>
+                )}
               </div>
             </div>
           </SheetContent>

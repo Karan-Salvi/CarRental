@@ -61,7 +61,7 @@ export default function Home() {
           </h1>
           <Link
             href="/cars"
-            className="max-w-4xl mx-auto bg-card p-4 rounded-full shadow-lg grid md:grid-cols-4 gap-4 items-center mt-12 mb-8"
+            className="max-w-4xl p-12 rounded-5xl mx-auto bg-card md:p-4 rounded-full shadow-lg grid md:grid-cols-4 gap-4 items-center mt-12 mb-8"
           >
             <div className="relative md:col-span-2">
               <Input

@@ -53,8 +53,6 @@ export default function AdminBookingsPage() {
     isFetching,
   } = useFetchBookingsQuery();
 
-  
-
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -150,7 +148,7 @@ export default function AdminBookingsPage() {
                   className="border-gray-200 dark:border-gray-800"
                 >
                   <TableCell>
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-col md:flex-row items-center gap-3">
                       {booking?.car && (
                         <Image
                           src={booking?.car?.image || "/images/car1.png"}
