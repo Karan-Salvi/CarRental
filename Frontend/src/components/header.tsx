@@ -39,7 +39,7 @@ export default function Header() {
               "text-xl font-bold tracking-tight text-gray-900 dark:text-gray-100"
             }
           >
-            CarRental
+            RentCarsWorld
           </span>
         </Link>
         <nav className="hidden md:flex gap-8 items-center">

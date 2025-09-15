@@ -33,27 +33,25 @@ const testimonials = [
     location: "Barcelona, Spain",
     avatarUrl: "https://randomuser.me/api/portraits/women/68.jpg",
     review:
-      "I rented a car from various companies, but CarRental provides the best value and service. I highly recommend them!",
+      "I rented a car from various companies, but RentCarsWorld provides the best value and service. I highly recommend them!",
   },
   {
     name: "John Smith",
     location: "New York, USA",
     avatarUrl: "https://randomuser.me/api/portraits/men/32.jpg",
     review:
-      "CarRental made my trip so much easier. The reservation process was seamless, and the car was in perfect condition.",
+      "RentCarsWorld made my trip so much easier. The reservation process was seamless, and the car was in perfect condition.",
   },
   {
     name: "Ava Johnson",
     location: "Sydney, Australia",
     avatarUrl: "https://randomuser.me/api/portraits/women/44.jpg",
     review:
-      "I highly recommend CarRental! The team is friendly and professional, providing an excellent renting experience.",
+      "I highly recommend RentCarsWorld! The team is friendly and professional, providing an excellent renting experience.",
   },
 ];
 
 export default function Home() {
- 
-
   return (
     <div className="flex flex-col bg-background ">
       <section className="w-full pt-20 md:pt-28 lg:pt-30 bg-gradient-to-br from-white to-slate-200">

@@ -9,7 +9,7 @@ import State_Provider from "@/components/State_Provider";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "CarRental - Luxury Cars on Rent",
+  title: "RentCarsWorld - Luxury Cars on Rent",
   description: "Find and book the perfect luxury rental car for any occasion.",
 };
 
