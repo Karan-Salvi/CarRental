@@ -316,7 +316,7 @@ app.post("/api/cars", auth(), requireRole("owner"), async (req, res) => {
 });
 
 // ✅ Delete a car
-app.delete("/cars/:id", async (req, res) => {
+app.delete("/api/cars/:id", async (req, res) => {
   try {
     const car = await Car.findByIdAndDelete(req.params.id);
     if (!car) return res.status(404).json({ error: "Car not found" });

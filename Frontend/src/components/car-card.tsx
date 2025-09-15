@@ -26,7 +26,7 @@ export default function CarCard({ car }: any) {
   console.log("Rendering CarCard for car:", car);
   return (
     <Card className="rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group border bg-card">
-      <Link href={`/cars/${car.id}`} className="block">
+      <Link href={`/cars/${car._id}`} className="block">
         <div className="aspect-[4/3] w-full overflow-hidden relative">
           <Image
             src={car?.image || "/images/car1.png"}
@@ -47,7 +47,7 @@ export default function CarCard({ car }: any) {
       </Link>
       <CardContent className="p-4 bg-white">
         <h3 className="text-lg font-bold text-primary">
-          <Link href={`/cars/${car.id}`} className="hover:underline">
+          <Link href={`/cars/${car._id}`} className="hover:underline">
             <span className="text-xs text-muted-foreground">
               {formatDateWithDay(car?.createdAt)}
             </span>
@@ -59,7 +59,10 @@ export default function CarCard({ car }: any) {
           {car?.category?.toUpperCase()} &bull; {car?.year}
         </p>
 
-        <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-muted-foreground pt-4 mt-4">
+        <Link
+          href={`/cars/${car._id}`}
+          className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-muted-foreground pt-4 mt-4"
+        >
           <div className="flex items-center gap-2">
             <Users className="w-4 h-4 text-primary" />
             <span>{car?.seatingCapacity} Seats</span>
@@ -76,7 +79,7 @@ export default function CarCard({ car }: any) {
             <MapPin className="w-4 h-4 text-primary" />
             <span>{car.location}</span>
           </div>
-        </div>
+        </Link>
       </CardContent>
     </Card>
   );

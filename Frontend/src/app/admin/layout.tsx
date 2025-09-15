@@ -142,7 +142,7 @@ const Sidebar = () => {
           ))}
         </div>
 
-        {open && (
+        {/* {open && (
           <div className="border-t border-gray-200 dark:border-gray-800 pt-4 space-y-1">
             <div className="px-3 py-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
               Account
@@ -169,7 +169,7 @@ const Sidebar = () => {
               open={open}
             />
           </div>
-        )}
+        )} */}
       </div>
 
       <ToggleClose open={open} setOpen={setOpen} />
