@@ -46,7 +46,11 @@ export default function Header() {
           {navLinks.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              href={
+                link.href == "/dashboard/bookings" && !user
+                  ? "/login"
+                  : link.href
+              }
               className={cn(
                 "text-base font-medium transition-colors hover:text-primary",
                 pathname === link.href

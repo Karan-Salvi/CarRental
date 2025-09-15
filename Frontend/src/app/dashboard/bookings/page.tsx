@@ -31,7 +31,6 @@ export default function UserBookingsPage() {
     isFetching,
   } = useFetchBookingsQuery();
 
-  
   useEffect(() => {
     setIsClient(true);
   }, []);

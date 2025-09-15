@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { notFound, useParams } from "next/navigation";
+import { notFound, useParams, useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,9 +21,12 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCreateBookingMutation, useFetchCarQuery } from "@/store/api/api";
+import { useSelector } from "react-redux";
 
 export default function CarDetailsPage() {
   const params = useParams();
+  const { user } = useSelector((state) => state.auth);
+  const router = useRouter();
 
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
@@ -67,16 +70,18 @@ export default function CarDetailsPage() {
 
   const handleBooking = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      router.push("/login");
+      return;
+    }
     const bookingData = {
       carId: params?.id,
       startDate: pickupDate,
       endDate: returnDate,
     };
-    
 
     try {
-      const result = await createBooking(bookingData).unwrap(); 
-      
+      const result = await createBooking(bookingData).unwrap();
     } catch (err) {
       console.error("Failed to create booking:", err);
     }
@@ -204,7 +209,9 @@ export default function CarDetailsPage() {
                     {isBookingLoading && (
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     )}
-                    {isBookingSuccess
+                    {!user
+                      ? "Login to Book"
+                      : isBookingSuccess
                       ? "Booked"
                       : car?.isAvailable
                       ? "Book Now"
